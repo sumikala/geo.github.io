@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />  
+	<link rel="stylesheet" href="theme/default/style.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">    
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    
+	
+    <title>Testing title</title>
+    <style>
+        .ol-zoom {
+          top: 52px;
+        }
+        .ol-toggle-options {
+          z-index: 1000;
+          background: rgba(255,255,255,0.4);
+          border-radius: 4px;
+          padding: 2px;
+          position: absolute;
+          left: 8px;
+          top: 8px;
+        }
+        #updateFilterButton, #resetFilterButton {
+          height: 22px;
+          width: 22px;
+          text-align: center;
+          text-decoration: none !important;
+          line-height: 22px;
+          margin: 1px;
+          font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+          font-weight: bold !important;
+          background: rgba(0,60,136,0.5);
+          color: white !important;
+          padding: 2px;
+        }
+        .ol-toggle-options a {
+          background: rgba(0,60,136,0.5);
+          color: white;
+          display: block;
+          font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+          font-size: 19px;
+          font-weight: bold;
+          height: 22px;
+          line-height: 11px;
+          margin: 1px;
+          padding: 0;
+          text-align: center;
+          text-decoration: none;
+          width: 22px;
+          border-radius: 2px;
+        }
+        .ol-toggle-options a:hover {
+          color: #fff;
+          text-decoration: none;
+          background: rgba(0,60,136,0.7);
+        }
+        body {
+            font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+            font-size: small;
+        }
+        iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+        /* Toolbar styles */
+        #toolbar {
+            position: relative;
+            padding-bottom: 0.5em;
+        }
+        #toolbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #toolbar ul li {
+            float: left;
+            padding-right: 1em;
+            padding-bottom: 0.5em;
+        }
+        #toolbar ul li a {
+            font-weight: bold;
+            font-size: smaller;
+            vertical-align: middle;
+            color: black;
+            text-decoration: none;
+        }
+        #toolbar ul li a:hover {
+            text-decoration: underline;
+        }
+        #toolbar ul li * {
+            vertical-align: middle;
+        }
+        #map {
+            clear: both;
+            position: relative;
+            width: 740px;
+            height: 768px;
+            border: 1px solid black;
+        }
+        #wrapper {
+            width: 740px;
+        }
+        #location {
+            float: right;
+        }
+        /* Styles used by the default GetFeatureInfo output, added to make IE happy */
+        table.featureInfo, table.featureInfo td, table.featureInfo th {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            font-size: 90%;
+            padding: .2em .1em;
+        }
+        table.featureInfo th {
+            padding: .2em .2em;
+            font-weight: bold;
+            background: #eee;
+        }
+        table.featureInfo td {
+            background: #fff;
+        }
+        table.featureInfo tr.odd td {
+            background: #eee;
+        }
+        table.featureInfo caption {
+            text-align: left;
+            font-size: 100%;
+            font-weight: bold;
+            padding: .2em .2em;
+        }
+    </style>
+
+	
+  </head>
+  <body onload='init()'>
+  <div class="row hidden-xs" style="margin: 0px;text-align:center;   padding:0 10px 30px 10px; ">
+            <a class="navbar-brand" href="http://google.com/" target="_blank">
+               <img  src= "img/marker-gold.png" alt="marker-gold">				
+            </a>    
+			<a class="navbar-brand" href="http://nrsc.gov.in/" target="_blank" style="float:right; ">
+               <img  src="img/bhuvan_viewer3t2.png" alt="NRSC/ISRO Logo">
+				
+            </a>
+    </div>
+	<div class="row visible-xs" style="margin: 0px;text-align:center; background-color:white; padding:0 5px 0 5px; ">
+             <a  href="http://bhuvan.nrsc.gov.in/" target="_blank" style="float:left";>
+               <img  src= "img/bhuvan_30.png" alt="Bhuvan Logo">				
+            </a>    
+			<a  href="http://nrsc.gov.in/" target="_blank" style="float:right; ">
+               <img  src="img/bhuvan_nrsc_isro_30.png" alt="NRSC/ISRO Logo">				
+            </a>
+     </div>
+   
+      <div id="map">      </div>
+      <div class="row main-row">
+        <div class="col-sm-4 col-md-3 sidebar sidebar-left pull-left">
+          <div class="panel-group sidebar-body" id="accordion-left">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#layers">
+                    <i class="fa fa-list-alt"></i>
+                    Layers
+                  </a>
+                  <span class="pull-right slide-submenu">
+                    <i class="fa fa-chevron-left"></i>
+                  </span>
+                </h4>
+              </div>
+               <div id="layers" class="panel-collapse collapse out">               
+                  <a id='layer1' href="#" class="list-group-item" Onclick="layervisibility('layer1')">
+                    <i class="fa fa-globe"></i> HR Data - 2018
+                  </a>
+				  <a id='layer2' href="#" class="list-group-item" Onclick="layervisibility('layer2')">
+                    <i class="fa fa-globe"></i> Satllite Imagery - 2017
+                  </a>
+                  <a id='layer3' href="#" class="list-group-item" Onclick="layervisibility('layer3')">
+                    <i class="fa fa-globe"></i> Satllite Imagery - 2016
+                  </a>
+				  
+				  <span id='zoomvalue'><b>Zoom:11</b></span>
+		<!-- start of seach div html code -->
+			<div> 
+				<form id="form1" name="myform1" method="post" action="" style="padding-top:2px; padding-left:10px">
+					<b>search</b>&nbsp;&nbsp;<input type="text" value="21.8,78.5" name='long' id='Val' style="color: Gray; font-size:12px;width:200px;" onClick="remove1(this.id)">
+					<a href="#" style="cursor: hand; vertical-align:middle" onClick="search_new()">
+					<img src="img/searchnew.png" width="18" height="15" border="0" /></a>
+				</form>
+			</div> 
+			<!-- end of seach div html code -->	 
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="mini-submenu mini-submenu-left pull-left">
+        <i class="fa fa-list-alt"></i>
+      </div>
+    </div>
+	 <script src="js/OpenLayers.js"></script> 
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript">
+var map;
+$("#"+'sat_base_map').css('background-color','#34495e');
+$("#"+'sat_base_map').css('color','#FFFFFF');
+      function applyMargins() {
+        var leftToggler = $(".mini-submenu-left");
+        if (leftToggler.is(":visible")) {
+          $("#map .ol-zoom")
+            .css("margin-left", 0)
+            .removeClass("zoom-top-opened-sidebar")
+            .addClass("zoom-top-collapsed");
+        } else {
+          $("#map .ol-zoom")
+            .css("margin-left", $(".sidebar-left").width())
+            .removeClass("zoom-top-opened-sidebar")
+            .removeClass("zoom-top-collapsed");
+        }
+      }
+
+      function isConstrained() {
+        return $(".sidebar").width() == $(window).width();
+      }
+
+      function applyInitialUIState() {
+        if (isConstrained()) {
+          $(".sidebar-left .sidebar-body").fadeOut('slide');
+          $('.mini-submenu-left').fadeIn();
+        }
+      }
+
+      $(function(){
+        $('.sidebar-left .slide-submenu').on('click',function() {
+          var thisEl = $(this);
+          thisEl.closest('.sidebar-body').fadeOut('slide',function(){
+            $('.mini-submenu-left').fadeIn();
+            applyMargins();
+          });
+        });
+
+        $('.mini-submenu-left').on('click',function() {
+          var thisEl = $(this);
+          $('.sidebar-left .sidebar-body').toggle('slide');
+          thisEl.hide();
+          applyMargins();
+        });
+
+        $(window).on("resize", applyMargins);
+
+      
+	
+        applyInitialUIState();
+        applyMargins();
+		
+      });
+	  
+	  
+
+var layer1,layer2,layer3;
+var temporal_layer1,temporal_layer2,temporal_layer3;
+var admin_poi;
+function init()
+{
+            
+		var url="https://bhuvan-ras1.nrsc.gov.in/"
+		
+		map = new OpenLayers.Map( 'map', {
+					resolutions: [0.0006866455078125, 0.00034332275390625, 0.000171661376953125,
+                                        0.0000858306884765625, 0.00004291534423828125, 0.000021457672119140625,0.000010728836059570,0.000005364418029785,0.00000268220901485],
+										
+				});
+			
+			
+		var dummylayer = new OpenLayers.Layer("base__worl2", {isBaseLayer: true,  displayInLayerSwitcher: false   })
+		map.addLayer(dummylayer)
+		
+		layer1= new OpenLayers.Layer.WMS( "HR Data -2018","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: '2018_airbus',transparent:true} ,{visibility:false,displayInLayerSwitcher: false   });
+		map.addLayer(layer1)
+		layer2= new OpenLayers.Layer.WMS( "Satellite Data","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: '2017_img',transparent:true} ,{visibility:true,displayInLayerSwitcher: false   });
+		map.addLayer(layer2)
+		layer3= new OpenLayers.Layer.WMS( "Satellite Data","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: 'kompsat',transparent:true} ,{visibility:false,displayInLayerSwitcher: false   });
+		map.addLayer(layer3)		
+		temporal_layer4= new OpenLayers.Layer.WMS( "Satellite Data- Multilayer Cache","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: 'bhuvan_img',transparent:true} ,{visibility:false});
+		map.addLayer(temporal_layer4)		
+		temporal_layer1= new OpenLayers.Layer.WMS( "HR data 2018 - Carto","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: 'pt5m',transparent:true} ,{visibility:false});
+		map.addLayer(temporal_layer1)		
+		temporal_layer3= new OpenLayers.Layer.WMS( "Satellite Data - 1973","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: 'corona',transparent:true} ,{visibility:false});
+		map.addLayer(temporal_layer3)			
+		temporal_layer4= new OpenLayers.Layer.WMS( "Admin+POI data","https://bhuvan-ras1.nrsc.gov.in/tilecache/tilecache.py", {layers: 'Bhuvan_Lite_Sat_V2',transparent:true} ,{visibility:false});
+		map.addLayer(temporal_layer4)			
+						
+							
+       
+
+	   
+		    map.addControl(
+                new OpenLayers.Control.MousePosition({
+                    prefix: '<a target="_blank"  style="color:red"' +
+                        'href="http://spatialreference.org/ref/epsg/4326/">' +
+                        'EPSG:4326</a> coordinates: ',
+                    separator: ' | ',
+                    numDigits: 6,
+                    emptyString: 'Mouse is not over map.'
+                })
+            );
+			   map.events.register("mousemove", map, function(e) {
+                var position = this.events.getMousePosition(e);
+                OpenLayers.Util.getElement("coords").innerHTML = position;
+            });
+			
+			map.addControl(new OpenLayers.Control.Scale())
+			map.addControl(new OpenLayers.Control.ScaleLine())
+			map.addControl(new OpenLayers.Control.LayerSwitcher())
+			
+            map.setCenter(new OpenLayers.LonLat(77.386, 28.61),11);
+			
+			
+			
+			 /*Selecting default layer*/
+			 $("#layer2").css('background-color','#34495e');
+			 $("#layer2").css('color','#ffffff');
+			
+			 /*Updating Zoom Info*/
+				map.events.register('zoomend', map, function() {
+						var zoomInfo = map.getZoom()+10;
+						document.getElementById('zoomvalue').innerHTML = '<b>Zoom:<b>'+zoomInfo;
+				})
+			
+			
+			
+			
+        }
+		
+function layervisibility(sat)
+{
+		
+		 
+		
+		
+		switch(sat)
+		{
+		 
+		 
+		 
+			 case 'layer1':	if (layer1.getVisibility()){
+								layer1.setVisibility(false);
+								$("#"+sat).css('background-color','transparent');
+								$("#"+sat).css('color','#555');
+							}
+							else{
+								layer1.setVisibility(true);
+								  $("#"+sat).css('background-color','#34495e');
+								  $("#"+sat).css('color','#ffffff');
+							}
+							break;
+			 
+			 case 'layer2': if (layer2.getVisibility()){
+								layer2.setVisibility(false);
+								$("#"+sat).css('background-color','transparent');
+								$("#"+sat).css('color','#555');
+							}
+							else{
+								layer2.setVisibility(true);
+								$("#"+sat).css('background-color','#34495e');
+								$("#"+sat).css('color','#ffffff');
+							}
+							break;	
+							
+			case 'layer3': if (layer3.getVisibility()){
+								layer3.setVisibility(false);
+								$("#"+sat).css('background-color','transparent');
+								$("#"+sat).css('color','#555');
+							}
+						   else{
+								layer3.setVisibility(true);
+								$("#"+sat).css('background-color','#34495e');
+								$("#"+sat).css('color','#ffffff');
+							}	
+						   break;
+							
+			
+					    					   
+		  
+		  
+	
+		
+		}
+		
+}	
+
+
+/*Search*/
+
+var vlayer=null,feature=null;
+function GO_TO_latlong(l, k) {
+
+	if(vlayer==null)
+	{
+	 
+		vlayer = new OpenLayers.Layer.Vector("drawings1", {displayInLayerSwitcher: false});
+		map.addLayer(vlayer);	
+	}
+
+
+	if ((k < -180 || k > 180 )|| (l < -90 || l > 90) ){
+        alert("Please Enter Correct Range...");
+    } else
+	{
+		
+        if (feature != null) {	
+            vlayer.destroyFeatures(feature);			
+        }
+		
+        feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(k, l), {
+            some: "data"
+        }, {
+            externalGraphic: "../hrdata_all/img/marker.png",
+            graphicHeight: 17,
+            graphicWidth: 16
+        });      
+        vlayer.addFeatures(feature);		
+        var h = map.getZoom();
+		
+        if (h > 12) {
+		
+            map.setCenter(new OpenLayers.LonLat(k, l), h);
+        } else {
+		
+            map.setCenter(new OpenLayers.LonLat(k, l), 12);
+        }
+    }
+}
+
+
+function search_new()
+{
+	
+ var m = document.getElementById('Val');
+	var n=""+m.value;  
+	if (n == "")
+	{
+        alert("Cannot be empty")
+		return false;
+	}
+	
+	var regexLetter = /[a-zA-Z]/;
+	if (!(regexLetter.test(n)))
+	{   
+	
+				temp = n.split(',');
+				var l = parseFloat(temp[0])
+				var k = parseFloat(temp[1]); 
+			
+				GO_TO_latlong(l,k);		
+		    
+	}
+	else
+	{ alert('plese enter latitude and longitude')}	  
+
+	
+	
+}
+$(document).keypress(function(e){
+		if(e.which==13)
+		{
+			Go();
+			return false;
+		}
+	});
+/* end of search function*/
+
+	
+
+    </script>
+
+  </body>
+  
+</html>
+
+
+
+

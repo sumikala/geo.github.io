@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Closest Distance Map</title>
+    <meta name="description" content="Openlayers application showing closest distance map of any polygon from mouse position on mousemove.">
+    <meta name="keywords" content="GIS web, Openlayers, CDM, Closest Distance Map, JavaScript, GIS web clients">
+    <meta name="robots" content="index,follow">
+    <html lang="en-US">
+    <link rel="stylesheet" href="../css/ol.css" type="text/css">
+	<link rel="stylesheet" href="../css/ol3-layerswitcher.css" type="text/css">
+    <link rel="stylesheet" href="./resources/layout.css" type="text/css">
+	
+	<style>
+	html, body {
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		font-family: sans-serif;
+		font-size: small;
+	}
+
+	#map {
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+	}
+      .map:-moz-full-screen {
+        height: 100%;
+      }
+      .map:-webkit-full-screen {
+        height: 100%;
+      }
+      .map:fullscreen {
+        height: 100%;
+      }
+      /* position the rotate control lower than usual */
+      .ol-rotate {
+        top: 3em;
+      }
+      .ol-rotate {
+        top: 2.5em;
+        right: 0.5em;
+      }
+	  #minDist{
+		  position: absolute;
+		  background:rgba(255,255,0,0.7);
+		  color: blue;
+		  z-index: 10000;
+		  bottom: 30%;
+	  }
+	  #info{
+		  position: absolute;
+		  background:rgba(255,255,0,0.3);
+		  color: green;
+		  z-index: 10000;
+		  bottom: 40%;
+	  }
+    </style>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-91400818-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
+  </head>
+  <body>
+    <div id="map" class="map">
+	<div id="info"></div>
+    <div id="minDist">&nbsp;</div></div>
+	<script src="./resources/common.js"></script>
+    <script src="../build/ol.js"></script>
+	<script src="../build/ol3-layerswitcher.js"></script>
+	<script type="text/javascript" src="../../js/geographiclib.min.js"></script>
+    <script>
+      var country;
+	  
+	  var colors = {
+        'blue': 'rgba(0, 0, 255, 0.7)'
+      };
+
+      var styleCache = {};
+      var styleFunction = function(feature) {
+        var color = colors['blue'];
+        var style = styleCache[color];
+        if (!style) {
+          style = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: color,
+              width: 3
+            })
+          });
+          styleCache[color] = style;
+        }
+        return style;
+      };
+
+      var vectorSource = new ol.source.Vector();
+
+	  var KMLUrls = [
+        'data/kml/Countries/afganistan.kml'
+      ];
+
+      function get(url, callback) {
+        var client = new XMLHttpRequest();
+        client.open('GET', url);
+        client.onload = function() {
+          callback(client.responseText);
+        };
+        client.send();
+      }
+
+      var kmlFormat = new ol.format.KML();
+      for (var i = 0; i < KMLUrls.length; ++i) {
+        get(KMLUrls[i], function(data) {
+          var features = kmlFormat.readFeatures(data,
+              {featureProjection: 'EPSG:4326'});
+          vectorSource.addFeatures(features);
+        });
+      }
+
+	var dragAndDropInteraction = new ol.interaction.DragAndDrop({
+        formatConstructors: [
+          ol.format.GPX,
+          ol.format.GeoJSON,
+          ol.format.IGC,
+          ol.format.KML,
+          ol.format.TopoJSON
+        ]
+      });
+	 
+	window.app = {};
+	app = window.app;
+	app.RotateNorthControl = function(opt_options) {
+	var options = opt_options || {};
+	var button = document.createElement('button');
+	button.innerHTML = 'N';
+
+  var this_ = this;
+  var handleRotateNorth = function() {
+    this_.getMap().getView().setRotation(0);
+  };
+
+  button.addEventListener('click', handleRotateNorth, false);
+  button.addEventListener('touchstart', handleRotateNorth, false);
+
+  var element = document.createElement('div');
+  element.className = 'rotate-north ol-unselectable ol-control';
+  element.appendChild(button);
+
+  ol.control.Control.call(this, {
+    element: element,
+    target: options.target
+  });
+
+};
+	ol.inherits(app.RotateNorthControl, ol.control.Control);
+	
+	logoElement = document.createElement('a');
+    logoElement.href = 'http://www.osgeo.org/';
+    logoElement.target = '_blank';
+
+    logoImage = document.createElement('img');
+    logoImage.src = 'http://www.osgeo.org/sites/all/themes/osgeo/logo.png';
+
+    logoElement.appendChild(logoImage);
+
+	var OSM = new ol.layer.Tile({
+					title: 'OSM',
+					type: 'base',
+					visible: true,
+					source: new ol.source.OSM()
+				});
+
+	
+	baselayers = new ol.layer.Group({
+            'title': 'Base maps',
+			layers: [OSM]
+		});
+	overlays = new ol.layer.Group({
+                title: 'Overlays',
+                layers: [
+					new ol.layer.Vector({
+					title: 'Afganistan',
+					ource: new ol.source.ImageWMS({
+          
+          url: 'http://localhost:8080/geoserver/cite/wms',
+          params: {'FORMAT': format,
+                   'VERSION': '1.1.1',  
+                "STYLES": '',
+                "LAYERS": 'cite:INDIA',TRANSPARENT:true
+          }
+        })
+					style: styleFunction
+          })
+                ]
+});
+
+view = new ol.View({
+		center: [78,28],
+		zoom: 4,
+		projection: 'EPSG:4326',
+		rotation: 0
+		})
+	map = new ol.Map({
+		controls: ol.control.defaults().extend([
+          new ol.control.ScaleLine({
+            units: 'metric'
+          }), new ol.control.FullScreen(),
+		  new app.RotateNorthControl()
+        ]),
+		interactions: ol.interaction.defaults().extend([dragAndDropInteraction, new ol.interaction.DragRotateAndZoom()]),
+		layers: [baselayers, overlays],
+		target: "map",
+		renderer: common.getRendererFromQueryString(),
+		view: view,
+		logo: logoElement
+	});
+
+
+	  dragAndDropInteraction.on('addfeatures', function(event) {
+        vectorSource = new ol.source.Vector({
+          features: event.features
+        });
+		country = new ol.layer.Image({
+          source: new ol.source.ImageVector({
+            source: vectorSource,
+            style: styleFunction
+          })
+        });
+		if(country){
+			map.removeLayer(country);
+		}
+        map.addLayer(country);
+        map.getView().fit(
+            vectorSource.getExtent(), /** @type {ol.Size} */ (map.getSize()));
+      });
+
+      var displayFeatureInfo = function(pixel) {
+        var features = [];
+        map.forEachFeatureAtPixel(pixel, function(feature) {
+          features.push(feature);
+        });
+        if (features.length > 0) {
+          var info = [];
+          var i, ii;
+          for (i = 0, ii = features.length; i < ii; ++i) {
+            info.push(features[i].get('name'));
+          }
+          document.getElementById('info').innerHTML = info.join(', ') || '&nbsp';
+        } else {
+          document.getElementById('info').innerHTML = '&nbsp;';
+        }
+      };
+
+      map.on('pointermove', function(evt) {
+        if (evt.dragging) {
+          return;
+        }
+        var pixel = map.getEventPixel(evt.originalEvent);
+        displayFeatureInfo(pixel);
+      });
+
+      map.on('click', function(evt) {
+        displayFeatureInfo(evt.pixel);
+      });
+
+	zoomslider = new ol.control.ZoomSlider();
+	map.addControl(zoomslider);
+	
+  var layerSwitcher = new ol.control.LayerSwitcher({
+        tipLabel: 'Layer Switcher' // Optional label for button
+    });
+	
+	map.addControl(layerSwitcher);
+	  
+      var point = null;
+      var line = null;
+      var displaySnap = function(coordinate) {
+        var closestFeature = vectorSource.getClosestFeatureToCoordinate(coordinate);
+        var info = document.getElementById('minDist');
+        if (closestFeature === null) {
+          point = null;
+          line = null;
+          info.innerHTML = '&nbsp;';
+        } else {
+          var geometry = closestFeature.getGeometry();
+          var closestPoint = geometry.getClosestPoint(coordinate);
+          if (point === null) {
+            point = new ol.geom.Point(closestPoint);
+          } else {
+            point.setCoordinates(closestPoint);
+          }
+          var x = GeographicLib.Geodesic.WGS84, r;
+          info.innerHTML =
+              'Mouse Position: ' +coordinate[1].toFixed(5)+' '+coordinate[0].toFixed(5)+'<br>Closest Coordinate: '+closestPoint[1].toFixed(5)+' '+closestPoint[0].toFixed(5)+'<br>Distance in KM: '+(x.Inverse(closestPoint[1], closestPoint[0], coordinate[1], coordinate[0]).s12/1000).toFixed(3);
+          var coordinates = [coordinate, [closestPoint[0], closestPoint[1]]];
+          if (line === null) {
+            line = new ol.geom.LineString(coordinates);
+          } else {
+            line.setCoordinates(coordinates);
+          }
+        }
+        map.render();
+      };
+
+      map.on('pointermove', function(evt) {
+        if (evt.dragging) {
+          return;
+        }
+        var coordinate = map.getEventCoordinate(evt.originalEvent);
+        displaySnap(coordinate);
+      });
+
+      map.on('click', function(evt) {
+        displaySnap(evt.coordinate);
+      });
+
+      var stroke = new ol.style.Stroke({
+        color: 'rgba(0,0,255,0.8)',
+        width: 2
+      });
+      var style = new ol.style.Style({
+        stroke: stroke,
+        image: new ol.style.Circle({
+          radius: 3,
+          fill: new ol.style.Fill({
+              color: 'rgba(255,255,0,0.5)'
+            }),
+          stroke: stroke
+        })
+      });
+      map.on('postcompose', function(evt) {
+        var vectorContext = evt.vectorContext;
+        vectorContext.setStyle(style);
+        if (point !== null) {
+          vectorContext.drawGeometry(point);
+        }
+        if (line !== null) {
+          vectorContext.drawGeometry(line);
+        }
+      });
+
+      var featureOverlay = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        map: map,
+        style: new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({
+              color: 'rgba(255,0,0,0.9)'
+            })
+          })
+        })
+      });
+
+    </script>
+  </body>
+</html>

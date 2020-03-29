@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="http://localhost:8080/geoserver/openlayers3/ol.css"/>
+	
+	<link rel="stylesheet" href="../src/ol3-layerswitcher.css" />
+    <link rel="stylesheet" href="layerswitcher.css" />
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="http://localhost:8080/geoserver/openlayers3/ol.js" type="text/javascript"></script>
+	    <script src="ol3-layerswitcher.js"></script>
+    
+    <title>OpenLayers example</title>
+  </head>
+  <body>
+    <h2>World Map</h2>
+	
+	
+    <div id="map" class="map"></div>
+<script type="text/javascript">
+      var pureCoverage = false;
+      // if this is just a coverage or a group of them, disable a few items,
+      // and default to jpeg format
+      var format = 'image/png';
+      var bounds = [68.120198, 6.754256,
+                    97.415161, 37.135643];
+      if (pureCoverage) {
+        document.getElementById('antialiasSelector').disabled = true;
+        document.getElementById('jpeg').selected = true;
+        format = "image/jpeg";
+      }
+
+      
+      var OSM = new ol.layer.Tile({
+					title: 'OSM',
+					type: 'base',
+					visible: true,
+					source: new ol.source.OSM()
+				});
+				baselayers = new ol.layer.Group({
+            'title': 'Base maps',
+			layers: [OSM]
+		});
+	  var india_state = new ol.layer.Image({
+	  title:"India States",
+        visible:false,
+		source: new ol.source.ImageWMS({
+          ratio: 1,
+		  serverType: 'geoserver',
+          url: 'https://ahocevar.com/geoserver/wms',
+		  
+          params: {'FORMAT': format,'VERSION': '1.1.0',"STYLES": '',"LAYERS": 'topp:INDIA'
+          },
+		  serverType: 'geoserver'
+        })
+      });
+	  var patient = new ol.layer.Image({
+	  title:"Patient Travel History",
+        visible:false,
+		source: new ol.source.ImageWMS({
+          ratio: 1,
+          url: 'http://localhost:8080/geoserver/cite/wms',
+		  
+          params: {'FORMAT': format,
+                   'VERSION': '1.1.0',  
+                "STYLES": '',
+                "LAYERS": 'cite:indis_covid_travel'
+          }
+        })
+      });
+     
+
+	  view = new ol.View({
+		center: [78,28],
+		zoom: 4,
+		projection: 'EPSG:4326',
+		rotation: 0
+		})
+      var map = new ol.Map({
+
+		controls: ol.control.defaults().extend([new ol.control.ScaleLine({
+            units: 'metric'
+          }),
+		  new ol.control.MousePosition({
+          coordinateFormat: function(coord) {
+              return ol.coordinate.format(coord, '{x}, {y}', 4);
+          },
+          projection: 'EPSG:4326',
+          className: 'custom-mouse-position',
+          target: document.getElementById('map'),
+          undefinedHTML: '&nbsp;'
+        })
+		  
+        ]),
+		
+		layers: [baselayers,india_state,patient],
+		target: "map",
+		
+		view: view
+		
+	});
+
+	
+      //map.getView().fit(bounds, map.getSize());
+
+      var layerSwitcher = new ol.control.LayerSwitcher({
+        tipLabel: 'Légende' // Optional label for button
+    });
+    map.addControl(layerSwitcher);
+	
+    </script>
+  </body>
+</html>
