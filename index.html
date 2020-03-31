@@ -59,8 +59,7 @@
       // if this is just a coverage or a group of them, disable a few items,
       // and default to jpeg format
       var format = 'image/png';
-      var bounds = [68.120198, 6.754256,
-                    97.415161, 37.135643];
+      
       if (pureCoverage) {
         document.getElementById('antialiasSelector').disabled = true;
         document.getElementById('jpeg').selected = true;
@@ -80,7 +79,7 @@
 		});
 	  var india_state = new ol.layer.Image({
 	  title:"India States",
-        visible:false,
+        visible:true,
 		source: new ol.source.ImageWMS({
           ratio: 1,
 		  serverType: 'geoserver',
@@ -105,7 +104,7 @@
 
 	  view = new ol.View({
 		center: [78,28],
-		zoom: 4,
+		zoom: 5,
 		projection: 'EPSG:4326',
 		rotation: 0
 		})
