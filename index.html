@@ -46,7 +46,7 @@ body,div,table,thead,tbody,tfoot,tr,th,td,p {  border radius: 1px solid #D3D3D3;
 	#map
 	{
 	width:100%;
-	height:400px;
+	height:420px;
 	border-radius: 5px;
     border: 1px solid #000000;
 	padding: 5px;
@@ -65,20 +65,12 @@ body,div,table,thead,tbody,tfoot,tr,th,td,p {  border radius: 1px solid #D3D3D3;
 
   
 	width:100%;
-	hieght:600px;
+	hieght:400px;
 	border-radius: 20px;
     border: 1px solid #000000;
 	padding: 25px;
 }
-#left {
- 
 
-	
-	hieght:10px;
-
-
-
-}
 
 #box1 {
   text-align: center;
@@ -189,12 +181,30 @@ font-family: courier;
 </div>
 
 
-	<div class="row">
+	<div class="row" style="padding:10px;" >
 	<div class="col-xs-3" id='box1' style="color:red" > Confirmed <br></br><div class="box2" >6752</div> </div>
 	<div class="col-xs-3" id='box1' style="color:blue">  Active<br></br><div class="box2" >5879</div> </div>
 	<div class="col-xs-3" id='box1' style="color:green" > Recovered <br></br><div class="box2" >620</div> </div>
 	<div class="col-xs-3" id='box1' style="color:grey" > Deceased <br></br> <div class="box2" >226</div> </div>
 	</div>
+
+
+	<div class="row" >  
+		<div class="col-xs-12"> 
+	 
+			<div id="map"  ></div>
+
+			<img id="legend"> <img></div>
+	
+	
+   <div id="popup" class="ol-popup">
+				<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+<div id="popup-content"></div></div>
+	
+	
+	</div> 
+
+
 	
 
  <div class="row" style="padding:10px">
@@ -412,18 +422,9 @@ font-family: courier;
   </div>
   </div>
   
-	<div class="row" >  
-		<div class="col-xs-12"> 
-	 
-			<div id="map"  ></div>
 
-			<img id="legend"> <img></div>
-	</div> 
 	
 	
-   <div id="popup" class="ol-popup">
-				<a href="#" id="popup-closer" class="ol-popup-closer"></a>
-<div id="popup-content"></div></div>
 
 
 <div class="row">
@@ -498,18 +499,18 @@ font-family: courier;
         })
       });
 	  var updateLegend = function(resolution) {
-  var graphicUrl = 'https://wms.qgiscloud.com/sumikala/india_states?&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=INDIA&QUERY_LAYERS=INDIA&FORMAT=image/png&STYLE=default&SLD_VERSION=1.1.0';
+  var graphicUrl = 'https://wms.qgiscloud.com/sumikala/india_states1?&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=INDIdistricts_v2&QUERY_LAYERS=INDIdistricts_v2&FORMAT=image/png&STYLE=default&SLD_VERSION=1.1.0';
   var img = document.getElementById('legend');
   img.src = graphicUrl;
 };
-	  var patient = new ol.layer.Image({
-	  title:"Test Sites",
+	  var india_district = new ol.layer.Image({
+	  title:"Districts",
         visible:true,
 		source: new ol.source.ImageWMS({
           ratio: 1,
 		  serverType: 'geoserver',
 		  query: 'cases',
-		  url: 'http://wms.qgiscloud.com/sumikala/testsites?&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=test_sites&&QUERY_LAYERS=test_sites&FORMAT=image/png&STYLE=default&SLD_VERSION=1.1.0',
+		  url: 'https://wms.qgiscloud.com/sumikala/india_states1?&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=INDIdistricts_v2&QUERY_LAYERS=INDIdistricts_v2&FORMAT=image/png&STYLE=default&SLD_VERSION=1.1.0',
 		  vendorParams: {propertyName:'cases'},
 		  params: {'TILED': true}
         })
@@ -531,7 +532,7 @@ font-family: courier;
           }),
 		  new ol.control.MousePosition({
           coordinateFormat: function(coord) {
-              return ol.coordinate.format(coord, '{x}, {y}', 4);
+              return ol.coordinate.format(coord, '{x}, {y}', 2);
           },
           projection: 'EPSG:4326',
           className: 'custom-mouse-position',
@@ -541,7 +542,7 @@ font-family: courier;
 		  
         ]),
 		
-		layers: [baselayers,india_state,patient],
+		layers: [baselayers,india_state,india_district],
 
 		target: "map",
 		
@@ -562,7 +563,7 @@ map.getView().on('change:resolution', function(event) {
 
         /////popup//
         
-        var overlay = new ol.Overlay({
+ var overlay = new ol.Overlay({
             element: container,
             autoPan: true,
             autoPanAnimation: {
@@ -587,7 +588,7 @@ map.getView().on('change:resolution', function(event) {
            // document.getElementById('popup').innerHTML = '';
             var viewResolution = /** @type {number} */ (view.getResolution());
 			overlay.setPosition(evt.coordinate);
-            var url = patient.getSource().getGetFeatureInfoUrl(
+            var url = india_district.getSource().getGetFeatureInfoUrl(
       evt.coordinate, viewResolution, viewProjection,
       {'INFO_FORMAT': 'text/html'});
 	  
@@ -598,7 +599,6 @@ map.getView().on('change:resolution', function(event) {
 
             container.style.display = 'block';
         });
-	
 	
     </script>
 	<script type="text/javascript">
