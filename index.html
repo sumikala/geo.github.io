@@ -19,12 +19,20 @@
 	  <link rel="stylesheet" href="src/layerswitcher/ol3-layerswitcher.css" />
     <link rel="stylesheet" href="src/layerswitcher/layerswitcher.css" />
 	 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <style type="text/css">
-
-
+     
+	 
+	 <style type="text/css">
+body,div,table,thead,tbody,tfoot,tr,th,td,p {  border radius: 10px solid #D3D3D3; }
+		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  } 
+		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:100%; height:0.5em;  } 
+		comment { display:none;  } 
+	
+	
+	
+	
 	
 	#master
-	{width:700px;
+	{width:100%;
 	
 	float: right;
 	border-radius: 20px;
@@ -35,72 +43,56 @@
 	
 	#map
 	{
-	width:600px;
+	width:100%;
 	height:610px;
 	border-radius: 20px;
     border: 1px solid #000000;
 	padding: 17px;
-	display: inline-block;
+	display: inline-block;float: right;
 	}
 	
 	#legend{
-	margin-top: 400px;
-	margin-left:5px;
-	display: inline-block;
+		display:inline-block;
+	margin-top:400px;
 	}
 	
-	#parent
-	{
-	float: left;
-    text-align: center;
-	background-image: url('https://tsauerwein.github.io/ol3/mapbox-gl-js/resources/textured_paper.jpeg');
-	width:550px;
-	hieght:600px;
-	border-radius: 20px;
-    border: 1px solid #000000;
-	padding: 5px;
-}
+
 #coronavirus-cases-linear {
 
   background-image: url('https://tsauerwein.github.io/ol3/mapbox-gl-js/resources/textured_paper.jpeg');
-	width:500px;
+	width:100%;
 	hieght:600px;
 	border-radius: 20px;
     border: 1px solid #000000;
 	padding: 25px;
 }
 #left {
-  float: left;
-  background-image: url('https://tsauerwein.github.io/ol3/mapbox-gl-js/resources/textured_paper.jpeg');
+ 
+
 	width:100%;
-	hieght:600px;
-	display: flex;
+	hieght:10px;
+
+
 
 }
 
 #box1 {
   text-align: center;
-  background-color: white;
   width:100%;
-	hieght:100%;
-	
-    border: 1px solid #000000;
-	
-	    
-    display: inline-block;
-	padding: 0px;
-    vertical-align: middle;
+	hieght:50px;
+   border-radius: 10px;
+    border: 1px solid #D3D3D3;
+	padding: 2px;
 	font-size: 20px;
 	color:#b38f00;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+font-family: courier;
 }
 .box2 {
   text-align: center;
-  
-	color:black;
+  font-size: 20px;
+	color:black; 
+        border radius: 10px solid #D3D3D3;
+		background-color: white;
 }
 
 
@@ -146,7 +138,7 @@
         right: 8px;
       }
       .ol-popup-closer:after {
-        content: "✖";
+        content: "â";
       }
 	  #h1{color: blue;
   font-family: courier;
@@ -155,29 +147,49 @@
   font-size: 300%;
   border: 1px solid powderblue;
   background-color: white;
-    display:flex;
-	text-align:left;
+
+	text-align:center;
 	padding:50px;
   }
   #h2{color: black;
   font-family: courier;
   font-size: 200%;
-  
-  
+
   
   }
   #twitter{
   width:100%;
-  display: flex;
-  float:left;
+ margin-top:100px";
   }
   #rss{
   width:100%;
-  display: flex;
-  float:left;
-  display: inline-block;
+ 
+
   }
-  
+	* {
+  box-sizing: border-box;
+	}
+
+	.row {
+  display: flex;
+  margin-left:10px;
+	}
+
+	/* Create three equal columns that sits next to each other */
+	.column {
+	flex: 50%;
+	padding: 20px;
+	
+}
+	.column1 {
+	flex: 33%;
+	padding: 20px;
+}
+.column2 {
+	flex: 10%;
+	
+}
+
 
     </style>
      <script src="src/ol.js" type="text/javascript"></script>
@@ -191,47 +203,283 @@
 
 
 
+
+
  <body>
  
- 	 <div id="twitter">
- <a class="twitter-timeline" data-width="400" data-height="500" href="https://twitter.com/MoHFW_INDIA?ref_src=twsrc%5Etfw">Tweets by MoHFW_INDIA</a> 
+
+
+
+
+
+
+<div id="a" style="margin-left:150px; margin-top:20px; font-size: 30px;font-family: courier">Coronavirus Statistics</div>
+<div id="b" style="margin-left:300px ;margin-top:5px; font-size: 15px; font-family: courier";>Last Updated 9 APR, 23:30 IST 	</div>
+<div id="b" style="margin-left:300px;  margin-top:5px;color: grey; font-size: 15px;font-family: courier">*Compile from MoHW </div>
+
+<div class="row">
+<div class="column1">
+
+
+
+  <div id="left"> 
+  <div class="row">
+  
+<div class="column"><div id='box1' style="color:red" > Confirmed <br></br><div class="box2" >6752</div> </div></div>
+<div class="column"><div id='box1' style="color:blue">  &nbsp;&nbsp;Active&nbsp;&nbsp;<br></br><div class="box2" >5879</div> </div></div>
+<div class="column"><div id='box1' style="color:green" > Recovered <br></br><div class="box2" >620</div> </div></div>
+<div class="column"><div id='box1' style="color:grey" > Deceased <br></br> <div class="box2" >226</div> </div></div>
+ </div></div>
+ <div class="row">
+   
+   <table cellspacing="0" border="0">
+	<colgroup width="232"></colgroup>
+	<colgroup width="176"></colgroup>
+	<colgroup width="80"></colgroup>
+	<colgroup width="52"></colgroup>
+	<tr>
+		<td style=" border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000" rowspan=2 height="44" align="left" valign=middle bgcolor="#FFFFFF"><b><font face="courier"" size=4 color="#0D0D0D">&nbsp;Name of State / UT</font></b></td>
+		<td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000" rowspan=2 align="center" valign=middle bgcolor="#FFFFFF"><b><font face="courier" size=4 color="#FF0000">&nbsp;Confirmed cases&nbsp;</font></b></td>
+		<td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000" rowspan=2 align="center" valign=middle bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#00B050">&nbsp;&nbsp;Cured&nbsp;&nbsp;</font></b></td>
+		<td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000" rowspan=2 align="center" valign=middle bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">&nbsp;&nbsp;Death&nbsp;&nbsp;</font></b></td>
+	</tr>
+	<tr>
+		</tr>
+	<tr>
+		<td style="border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Andhra Pradesh</font></b></td>
+		<td style="border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="348" sdnum="1033;"><b><font face="courier" size=3 color="#808080">348</font></b></td>
+		<td style="border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="6" sdnum="1033;"><b><font face="courier" size=3 color="#808080">6</font></b></td>
+		<td style="border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="4" sdnum="1033;"><b><font face="courier" size=3 color="#808080">4</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Andaman and Nicobar Islands</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="11" sdnum="1033;"><b><font face="courier" size=3 color="#808080">11</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Arunachal Pradesh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Assam</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="28" sdnum="1033;"><b><font face="courier" size=3 color="#808080">28</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Bihar</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="39" sdnum="1033;"><b><font face="courier" size=3 color="#808080">39</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Chandigarh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="18" sdnum="1033;"><b><font face="courier" size=3 color="#808080">18</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="7" sdnum="1033;"><b><font face="courier" size=3 color="#808080">7</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Chhattisgarh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="10" sdnum="1033;"><b><font face="courier" size=3 color="#808080">10</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="9" sdnum="1033;"><b><font face="courier" size=3 color="#808080">9</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Delhi</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="669" sdnum="1033;"><b><font face="courier" size=3 color="#808080">669</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="21" sdnum="1033;"><b><font face="courier" size=3 color="#808080">21</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="9" sdnum="1033;"><b><font face="courier" size=3 color="#808080">9</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Goa</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="7" sdnum="1033;"><b><font face="courier" size=3 color="#808080">7</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Gujarat</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="179" sdnum="1033;"><b><font face="courier" size=3 color="#808080">179</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="25" sdnum="1033;"><b><font face="courier" size=3 color="#808080">25</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="16" sdnum="1033;"><b><font face="courier" size=3 color="#808080">16</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Haryana</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="169" sdnum="1033;"><b><font face="courier" size=3 color="#808080">169</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="29" sdnum="1033;"><b><font face="courier" size=3 color="#808080">29</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="3" sdnum="1033;"><b><font face="courier" size=3 color="#808080">3</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Himachal Pradesh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="18" sdnum="1033;"><b><font face="courier" size=3 color="#808080">18</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="2" sdnum="1033;"><b><font face="courier" size=3 color="#808080">2</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Jammu and Kashmir</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="158" sdnum="1033;"><b><font face="courier" size=3 color="#808080">158</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="4" sdnum="1033;"><b><font face="courier" size=3 color="#808080">4</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="4" sdnum="1033;"><b><font face="courier" size=3 color="#808080">4</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Jharkhand</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="13" sdnum="1033;"><b><font face="courier" size=3 color="#808080">13</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Karnataka</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="181" sdnum="1033;"><b><font face="courier" size=3 color="#808080">181</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="28" sdnum="1033;"><b><font face="courier" size=3 color="#808080">28</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="5" sdnum="1033;"><b><font face="courier" size=3 color="#808080">5</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Kerala</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="345" sdnum="1033;"><b><font face="courier" size=3 color="#808080">345</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="83" sdnum="1033;"><b><font face="courier" size=3 color="#808080">83</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="2" sdnum="1033;"><b><font face="courier" size=3 color="#808080">2</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Ladakh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="14" sdnum="1033;"><b><font face="courier" size=3 color="#808080">14</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="10" sdnum="1033;"><b><font face="courier" size=3 color="#808080">10</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Madhya Pradesh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="259" sdnum="1033;"><b><font face="courier" size=3 color="#808080">259</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="16" sdnum="1033;"><b><font face="courier" size=3 color="#808080">16</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Maharashtra</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1135" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1135</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="117" sdnum="1033;"><b><font face="courier" size=3 color="#808080">117</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="72" sdnum="1033;"><b><font face="courier" size=3 color="#808080">72</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Manipur</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="2" sdnum="1033;"><b><font face="courier" size=3 color="#808080">2</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Mizoram</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Odisha</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="42" sdnum="1033;"><b><font face="courier" size=3 color="#808080">42</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="2" sdnum="1033;"><b><font face="courier" size=3 color="#808080">2</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Puducherry</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="5" sdnum="1033;"><b><font face="courier" size=3 color="#808080">5</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Punjab</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="101" sdnum="1033;"><b><font face="courier" size=3 color="#808080">101</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="4" sdnum="1033;"><b><font face="courier" size=3 color="#808080">4</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="8" sdnum="1033;"><b><font face="courier" size=3 color="#808080">8</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Rajasthan</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="383" sdnum="1033;"><b><font face="courier" size=3 color="#808080">383</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="21" sdnum="1033;"><b><font face="courier" size=3 color="#808080">21</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="3" sdnum="1033;"><b><font face="courier" size=3 color="#808080">3</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Tamil Nadu</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="738" sdnum="1033;"><b><font face="courier" size=3 color="#808080">738</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="21" sdnum="1033;"><b><font face="courier" size=3 color="#808080">21</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="8" sdnum="1033;"><b><font face="courier" size=3 color="#808080">8</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Telengana</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="442" sdnum="1033;"><b><font face="courier" size=3 color="#808080">442</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="35" sdnum="1033;"><b><font face="courier" size=3 color="#808080">35</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="7" sdnum="1033;"><b><font face="courier" size=3 color="#808080">7</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Tripura</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="1" sdnum="1033;"><b><font face="courier" size=3 color="#808080">1</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Uttarakhand</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="35" sdnum="1033;"><b><font face="courier" size=3 color="#808080">35</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="5" sdnum="1033;"><b><font face="courier" size=3 color="#808080">5</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="0" sdnum="1033;"><b><font face="courier" size=3 color="#808080">0</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">Uttar Pradesh</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="410" sdnum="1033;"><b><font face="courier" size=3 color="#808080">410</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="31" sdnum="1033;"><b><font face="courier" size=3 color="#808080">31</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="4" sdnum="1033;"><b><font face="courier" size=3 color="#808080">4</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="42" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">West Bengal</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="103" sdnum="1033;"><b><font face="courier" size=3 color="#808080">103</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="16" sdnum="1033;"><b><font face="courier" size=3 color="#808080">16</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="5" sdnum="1033;"><b><font face="courier" size=3 color="#808080">5</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" height="20" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080"><br></font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF"><b><font face="courier" size=3 color="#808080">5865*</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="478" sdnum="1033;"><b><font face="courier" size=3 color="#808080">478</font></b></td>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" align="center" valign=center bgcolor="#FFFFFF" sdval="169" sdnum="1033;"><b><font face="courier" size=3 color="#808080">169</font></b></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #a6a6a6; border-bottom: 1px solid #a6a6a6; border-left: 1px solid #a6a6a6; border-right: 1px solid #a6a6a6" colspan=4 height="20" align="left" valign=center bgcolor="#FFFFFF"><b><font face="courier" color="#808080"><br></font></b></td>
+		</tr>
+</table>
+   
+  </div></div>
+  <div class="column">
+  
+  <div id ="master">
+
+<div id="map"  ></div> 
+
+<div class="column2">
+<div><img id="legend"></div>
+</div>
+
+</div> <br><br></br></br>
+   <div id="popup" class="ol-popup">
+				<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+<div id="popup-content"></div></div>
+
+ 
+<div id="twitter" >
+ <a class="twitter-timeline" data-width="400" data-height="900" href="https://twitter.com/MoHFW_INDIA?ref_src=twsrc%5Etfw"><br><br><br><br><br>Tweets by MoHFW_INDIA</a> 
  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
  </div>	
  
- <div id="rss">
 
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:idx="urn:atom-extension:indexing">
-<id>
-tag:google.com,2005:reader/user/07248618632861322055/state/com.google/alerts/8080970609124725725
-</id>
-<title>Google Alert - coronacirus india</title>
-<link href="https://www.google.com/alerts/feeds/07248618632861322055/8080970609124725725" rel="self"/>
-</feed>
- </div>	
  
+
+</div>
+  </div>
  
- <div id="parent">
-<div id='h2'>CORONA Statistics </h2> </div>
-<div id="left"> 
-<div id="box1" > 
-<div style="background-color:lightblue"> Total Confirmed Cases</div><div style="background-color:lightblue" class="box2">4916</div> </div> 
-<div id='box1' style="background-color:green"> Recovered <br></br><div class="box2" style="background-color:green">386</div> </div>
-<div id='box1' style="background-color:red"> Deceased <br></br> <div class="box2" style="background-color:red">136</div> </div>
- </div>
+
  
+<div class="row">
+<div class="column"> 
  <div class="tab-pane active" id="coronavirus-cases-linear"></div>
- </div>
- 
+</div>
+<div class="column"> </div>
+</div>
 
- 
- <div id ="master">
- 
-<div id="map"  ></div>
-<div><img id="legend"></div></div>
-<div id="popup" class="ol-popup">
-				<a href="#" id="popup-closer" class="ol-popup-closer"></a>
-<div id="popup-content"></div></div>
-	
+
 
 
 	<script type="text/javascript">
@@ -328,7 +576,7 @@ map.getView().on('change:resolution', function(event) {
 });
 
        var layerSwitcher = new ol.control.LayerSwitcher({
-        tipLabel: 'Légende' // Optional label for button
+        tipLabel: 'LÃ©gende' // Optional label for button
     });
     map.addControl(layerSwitcher);
 
@@ -379,7 +627,7 @@ map.getView().on('change:resolution', function(event) {
             type: 'line'
         },
         title: {
-            text: 'Total Cases'
+            text: 'Total Cases in India'
         },
 
         subtitle: {
@@ -387,7 +635,7 @@ map.getView().on('change:resolution', function(event) {
         },
 
         xAxis: {
-            categories: ["Feb 15","Feb 16","Feb 17","Feb 18","Feb 19","Feb 20","Feb 21","Feb 22","Feb 23","Feb 24","Feb 25","Feb 26","Feb 27","Feb 28","Feb 29","Mar 01","Mar 02","Mar 03","Mar 04","Mar 05","Mar 06","Mar 07","Mar 08","Mar 09","Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 01","Apr 02","Apr 03","Apr 04","Apr 05","Apr 06"]        },
+            categories: ["Feb 15","Feb 16","Feb 17","Feb 18","Feb 19","Feb 20","Feb 21","Feb 22","Feb 23","Feb 24","Feb 25","Feb 26","Feb 27","Feb 28","Feb 29","Mar 01","Mar 02","Mar 03","Mar 04","Mar 05","Mar 06","Mar 07","Mar 08","Mar 09","Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 01","Apr 02","Apr 03","Apr 04","Apr 05","Apr 06","Apr 07","Apr 08","Apr 09","Apr 10"]        },
 
         yAxis: {
             title: {
@@ -411,7 +659,7 @@ map.getView().on('change:resolution', function(event) {
             name: 'Cases',
             color: '#33CCFF',
             lineWidth: 5,
-            data: [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,7,29,30,31,34,40,47,62,62,74,82,100,114,129,143,169,194,249,332,396,499,536,657,727,887,987,1024,1251,1397,1998,2543,3059,3588,4289,4778]        }],
+            data: [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,7,29,30,31,34,40,47,62,62,74,82,100,114,129,143,169,194,249,332,396,499,536,657,727,887,987,1024,1251,1397,1998,2543,3059,3588,4289,4778,5276,5840,6405,6725]        }],
 
         responsive: {
             rules: [{
@@ -430,63 +678,6 @@ map.getView().on('change:resolution', function(event) {
 
     });
 
-    Highcharts.chart('coronavirus-cases-log', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Total Cases'
-        },
-
-        subtitle: {
-            text: '(Logarithmic Scale)'
-        },
-
-        xAxis: {
-            categories: ["Feb 15","Feb 16","Feb 17","Feb 18","Feb 19","Feb 20","Feb 21","Feb 22","Feb 23","Feb 24","Feb 25","Feb 26","Feb 27","Feb 28","Feb 29","Mar 01","Mar 02","Mar 03","Mar 04","Mar 05","Mar 06","Mar 07","Mar 08","Mar 09","Mar 10","Mar 11","Mar 12","Mar 13","Mar 14","Mar 15","Mar 16","Mar 17","Mar 18","Mar 19","Mar 20","Mar 21","Mar 22","Mar 23","Mar 24","Mar 25","Mar 26","Mar 27","Mar 28","Mar 29","Mar 30","Mar 31","Apr 01","Apr 02","Apr 03","Apr 04","Apr 05","Apr 06"]        },
-
-        yAxis: {
-            title: {
-                text: 'Total Coronavirus Cases'
-            },
-
-            type: 'logarithmic'
-
-
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-
-        credits: {
-            enabled: false
-        },
-
-
-        series: [{
-            name: 'Cases',
-            color: '#33CCFF',
-            lineWidth: 5,
-            data: [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,7,29,30,31,34,40,47,62,62,74,82,100,114,129,143,169,194,249,332,396,499,536,657,727,887,987,1024,1251,1397,1998,2543,3059,3588,4289,4778]        }],
-
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 800
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-
-    });
 </script>
   </body>
-</html>   
+</html>
